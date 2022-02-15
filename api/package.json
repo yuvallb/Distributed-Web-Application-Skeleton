@@ -1,0 +1,29 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "Api",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"No tests defined. See manual testing in test.md\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuvallb/dist-webapp-skeleton.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yuvallb/dist-webapp-skeleton/issues"
+  },
+  "homepage": "https://github.com/yuvallb/dist-webapp-skeleton#readme",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "mongodb": "^4.3.1",
+    "redis": "^4.0.3",
+    "uuid": "^8.3.2"
+  }
+}
