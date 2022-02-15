@@ -54,7 +54,7 @@ cd frontend
 npm install
 npm run start 
 ```
-To browse the webapp, open a browser at http://localhost:8081
+To browse the webapp, open a browser at http://localhost:8000
 
 To exit, hit Ctrl-C
 
