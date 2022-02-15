@@ -30,7 +30,8 @@ We will use a nodeJS application listening on port 8080.
 To run ther backend api server locally, open a new terminal window and run: 
 ```bash
 cd api
-node run start 
+npm install
+npm run start 
 ```
 To exit, hit Ctrl-C
 
@@ -47,7 +48,7 @@ To exit, hit Ctrl-C
 
 ## Frontend
 
-We will use a simple html page, served by nodeJS (using react-scripts) listening on port 8000.
+We will use react, served by nodeJS (using react-scripts) listening on port 8000.
 To run ther frontend web server locally, open a new terminal window and run: 
 ```bash
 cd frontend

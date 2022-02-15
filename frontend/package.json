@@ -11,7 +11,8 @@
     "react-scripts": "^5.0.0"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start"
+    "start-if-you-get-errors": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts start"
   },
   "eslintConfig": {
     "extends": "react-app"

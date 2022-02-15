@@ -5,7 +5,7 @@ import NoteService from './service/note.js';
 import InMemoryNotes from './data-access/note/in-memory.js';
 import MongoNotes from './data-access/note/mongo.js';
 import RedisNotes from './data-access/note/redis.js';
-import cachedData from './data-access/note/cached.js';
+import CachedNotes from './data-access/note/cached.js';
 
 // create dependencies from configuration
 let notesData;
@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
     res.send('API is up!');
 });
 
-app.get('/note/:noteId', async (req, res, next) => {
+app.get('/notes/:noteId', async (req, res, next) => {
     try {
         const note = await noteService.get(req.params.noteId);
         if (!note) {
@@ -40,7 +40,7 @@ app.get('/note/:noteId', async (req, res, next) => {
     }
 });
 
-app.post('/note/search', jsonParser, async (req, res, next) => {
+app.post('/notes/search', jsonParser, async (req, res, next) => {
     try {
         const notes = await noteService.search(req.body);
         res.send(notes);
@@ -52,7 +52,7 @@ app.post('/note/search', jsonParser, async (req, res, next) => {
     }
 });
 
-app.post('/note/', jsonParser, async (req, res, next) => {
+app.post('/notes/', jsonParser, async (req, res, next) => {
     try {
         const note = await noteService.add(req.body);
         res.send(note);
@@ -61,16 +61,16 @@ app.post('/note/', jsonParser, async (req, res, next) => {
     }
 });
 
-app.put('/note/', jsonParser, async (req, res, next) => {
+app.put('/notes/:noteId', jsonParser, async (req, res, next) => {
     try {
-        const note = await noteService.update(req.body);
+        const note = await noteService.update(req.params.noteId, req.body);
         res.send(note);
     } catch (error) {
         return next(error)
     }
 });
 
-app.delete('/note/:noteId', async (req, res, next) => {
+app.delete('/notes/:noteId', async (req, res, next) => {
     try {
         const note = await noteService.delete(req.params.noteId);
         res.send(note);

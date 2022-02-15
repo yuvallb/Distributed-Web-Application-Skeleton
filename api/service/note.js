@@ -16,9 +16,14 @@ export default class NoteService {
         this.requiredField(note, "title");
         return await this.data.add(note);
     }
-    async update(note) {
+    async update(id, note) {
         this.requiredField(note, "id");
         this.requiredField(note, "title");
+        if (!id || id != note.id) {
+            const error = new Error("id missing or not match");
+            error.name = "BadRequest";
+            throw error;
+        }
         return await this.data.update(note);
     }
     async delete(id) {
