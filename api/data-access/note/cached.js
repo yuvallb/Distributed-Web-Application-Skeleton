@@ -1,4 +1,4 @@
-export default class InMemoryNotes {
+export default class CachedNotes {
     constructor(persistant, cache) {
         this.persistant = persistant;
         this.cache = cache;
@@ -13,9 +13,9 @@ export default class InMemoryNotes {
     }
 
     async delete(id) {
-        await this.cache.delete(note.id);
-        await this.persistant.delete(note.id);
-        return note;
+        await this.cache.delete(id);
+        await this.persistant.delete(id);
+        return id;
     }
 
     async getAll() {
@@ -29,7 +29,7 @@ export default class InMemoryNotes {
         }
         found = await this.persistant.getById(id);
         if (found) {
-            await this.cache.add(note);;
+            await this.cache.add(found);
         }
         return found;
     }

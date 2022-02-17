@@ -5,15 +5,16 @@ export default class AddNote extends Component {
   constructor(props) {
     super(props);
     this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onChangeContent = this.onChangeContent.bind(this);
+    this.onChangeDeadline = this.onChangeDeadline.bind(this);
     this.saveNote = this.saveNote.bind(this);
     this.newNote = this.newNote.bind(this);
 
     this.state = {
       id: null,
       title: "",
-      description: "", 
-      published: false,
+      content: "",
+      deadline: "",
 
       submitted: false
     };
@@ -25,16 +26,22 @@ export default class AddNote extends Component {
     });
   }
 
-  onChangeDescription(e) {
+  onChangeContent(e) {
     this.setState({
-      description: e.target.value
+      content: e.target.value
+    });
+  }
+
+  onChangeDeadline(e) {
+    this.setState({
+      deadline: e.target.value
     });
   }
 
   saveNote() {
     var data = {
       title: this.state.title,
-      description: this.state.description
+      content: this.state.content
     };
 
     NoteDataService.create(data)
@@ -42,8 +49,8 @@ export default class AddNote extends Component {
         this.setState({
           id: response.data.id,
           title: response.data.title,
-          description: response.data.description,
-          published: response.data.published,
+          content: response.data.content,
+          deadline: response.data.deadline,
 
           submitted: true
         });
@@ -58,8 +65,8 @@ export default class AddNote extends Component {
     this.setState({
       id: null,
       title: "",
-      description: "",
-      published: false,
+      content: "",
+      deadline: false,
 
       submitted: false
     });
@@ -91,15 +98,28 @@ export default class AddNote extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="description">Description</label>
+              <label htmlFor="content">Content</label>
               <input
                 type="text"
                 className="form-control"
-                id="description"
+                id="content"
                 required
-                value={this.state.description}
-                onChange={this.onChangeDescription}
-                name="description"
+                value={this.state.content}
+                onChange={this.onChangeContent}
+                name="content"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="deadline">Deadline</label>
+              <input
+                type="text"
+                className="form-control"
+                id="deadline"
+                required
+                value={this.state.content}
+                onChange={this.onChangeDeadline}
+                name="deadline"
               />
             </div>
 

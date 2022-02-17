@@ -135,9 +135,9 @@ export default class NotesList extends Component {
               </div>
               <div>
                 <label>
-                  <strong>Description:</strong>
+                  <strong>Content:</strong>
                 </label>{" "}
-                {currentNote.description}
+                {currentNote.content}
               </div>
               <div>
                 <label>
@@ -151,12 +151,6 @@ export default class NotesList extends Component {
                 className="badge badge-warning"
               >
                 Edit
-              </Link>
-              <Link
-                to={"/notes/" + currentNote.id}
-                className="badge badge-warning"
-              >
-                Delete
               </Link>
             </div>
           ) : (

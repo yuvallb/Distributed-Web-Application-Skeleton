@@ -12,7 +12,7 @@ This is a minimalist application skeleton, for demonstrating a distributed web a
 
 We will use MongoDB for a database service. To run MongoDB locally, open a new terminal window and run: 
 ```bash
-docker run -p 27017:27017 mongo -v <full local path of working directory>/mongodb-data:/data/db
+docker run -p 27017:27017 -v <full local path of working directory>/mongodb-data:/data/db mongo
 ```
 To exit, hit Ctrl-C
 

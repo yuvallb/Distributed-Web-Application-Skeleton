@@ -1,4 +1,5 @@
-import { MongoClient } from 'mongodb'
+import { MongoClient } from 'mongodb';
+import Note from '../../model/note.js';
 
 const databaseName = 'myapp';
 const collectionName = 'notes';
@@ -15,16 +16,14 @@ export default class MongoNotes {
     async add(note) {
         note["_id"] = note.id;
         await this.collection.insertOne(note);
-        delete note["_id"];
-        return note;
+        return new Note(note);
     }
 
     async update(note) {
         note["_id"] = note.id;
         const result = await this.collection.replaceOne({"_id":note.id}, note);
         if (result.matchedCount == 1) {
-            delete note["_id"];
-            return note;
+            return new Note(note);
         } else {
             return {};
         }
@@ -45,8 +44,7 @@ export default class MongoNotes {
 
     async getById(id) {
         const note = await this.collection.findOne({"_id":id});
-        delete note["_id"];
-        return note;
+        return new Note(note);
     }
 
     async search(text) {
@@ -59,7 +57,8 @@ export default class MongoNotes {
     // private
     async mongoFind(query) {
         const notes = this.collection.find(query).map((note)=>{delete note["_id"]; return note});
-        return notes.toArray();
+        const results = await notes.toArray();
+        return results.map( (n) => new Note(n) );
     }
 
 }
