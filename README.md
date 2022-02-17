@@ -12,7 +12,7 @@ This is a minimalist application skeleton, for demonstrating a distributed web a
 
 We will use MongoDB for a database service. To run MongoDB locally, open a new terminal window and run: 
 ```bash
-docker run -p 27017:27017 mongo 
+docker run -p 27017:27017 mongo -v <full local path of working directory>/mongodb-data:/data/db
 ```
 To exit, hit Ctrl-C
 
@@ -31,7 +31,7 @@ To run ther backend api server locally, open a new terminal window and run:
 ```bash
 cd api
 npm install
-npm run start 
+npm run watch 
 ```
 To exit, hit Ctrl-C
 
@@ -41,7 +41,7 @@ We will use a nodeJS application, listening to a redis queue.
 To run ther backend email sender locally, open a new terminal window and run: 
 ```bash
 cd email-sender
-node run start 
+node run watch 
 ```
 To exit, hit Ctrl-C
 
@@ -53,7 +53,7 @@ To run ther frontend web server locally, open a new terminal window and run:
 ```bash
 cd frontend
 npm install
-npm run start 
+npm run watch 
 ```
 To browse the webapp, open a browser at http://localhost:8000
 

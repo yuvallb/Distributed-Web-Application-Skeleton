@@ -12,7 +12,8 @@
   },
   "scripts": {
     "start-if-you-get-errors": "react-scripts --openssl-legacy-provider start",
-    "start": "react-scripts start"
+    "start": "react-scripts start",
+    "watch": "react-scripts start"
   },
   "eslintConfig": {
     "extends": "react-app"

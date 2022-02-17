@@ -18,6 +18,10 @@ export default class InMemoryNotes {
     getById(id) {
         return this.notes[id];
     }
+    getAll() {
+        return Object.keys(this.notes)
+            .map(k => this.notes[k]);
+    }
     search(text) {
         return Object.keys(this.notes)
             .filter(k => this.matchNote(this.notes[k], text))

@@ -1,8 +1,8 @@
 export default class Note {
-    constructor(id) {
-        this.id = id;
-        this.title = null;
-        this.content = null;
-        this.deadline = null;
+    constructor(obj) {
+        this.id = obj?.id;
+        this.title = obj?.title;
+        this.content = obj?.content;
+        this.deadline = obj?.deadline;
     }
 }

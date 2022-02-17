@@ -9,7 +9,6 @@ export default class NotesList extends Component {
     this.retrieveNotes = this.retrieveNotes.bind(this);
     this.refreshList = this.refreshList.bind(this);
     this.setActiveNote = this.setActiveNote.bind(this);
-    this.removeAllNotes = this.removeAllNotes.bind(this);
     this.searchTitle = this.searchTitle.bind(this);
 
     this.state = {
@@ -60,16 +59,6 @@ export default class NotesList extends Component {
     });
   }
 
-  removeAllNotes() {
-    NoteDataService.deleteAll()
-      .then(response => {
-        console.log(response.data);
-        this.refreshList();
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
 
   searchTitle() {
     this.setState({
@@ -133,12 +122,6 @@ export default class NotesList extends Component {
               ))}
           </ul>
 
-          <button
-            className="m-3 btn btn-sm btn-danger"
-            onClick={this.removeAllNotes}
-          >
-            Remove All
-          </button>
         </div>
         <div className="col-md-6">
           {currentNote ? (
@@ -158,9 +141,9 @@ export default class NotesList extends Component {
               </div>
               <div>
                 <label>
-                  <strong>Status:</strong>
-                </label>{" "}
-                {currentNote.published ? "Published" : "Pending"}
+                  <strong>Deadline:</strong>
+                </label>
+                {currentNote.deadline}
               </div>
 
               <Link
@@ -168,6 +151,12 @@ export default class NotesList extends Component {
                 className="badge badge-warning"
               >
                 Edit
+              </Link>
+              <Link
+                to={"/notes/" + currentNote.id}
+                className="badge badge-warning"
+              >
+                Delete
               </Link>
             </div>
           ) : (

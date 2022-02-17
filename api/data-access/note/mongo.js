@@ -39,6 +39,10 @@ export default class MongoNotes {
         }
     }
 
+    async getAll() {
+        return this.mongoFind({});
+    }
+
     async getById(id) {
         const note = await this.collection.findOne({"_id":id});
         delete note["_id"];
@@ -46,7 +50,16 @@ export default class MongoNotes {
     }
 
     async search(text) {
-        throw new Error("not implemented");
+        console.log('searching mongo for ' + text);
+        // this is really unsafe - you need to sanitize the regex!
+        return this.mongoFind({'title': {'$regex': text, '$options': 'i'}});
+    }
+
+
+    // private
+    async mongoFind(query) {
+        const notes = this.collection.find(query).map((note)=>{delete note["_id"]; return note});
+        return notes.toArray();
     }
 
 }

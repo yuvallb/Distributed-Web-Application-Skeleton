@@ -1,11 +1,14 @@
 import 'dotenv/config';
 import express from 'express';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import NoteService from './service/note.js';
 import InMemoryNotes from './data-access/note/in-memory.js';
 import MongoNotes from './data-access/note/mongo.js';
 import RedisNotes from './data-access/note/redis.js';
 import CachedNotes from './data-access/note/cached.js';
+import Note from './model/note.js';
+import NoteSearchQuery from './model/note-search-query.js';
 
 // create dependencies from configuration
 let notesData;
@@ -23,10 +26,40 @@ const app = express();
 const port = process.env.PORT;
 const jsonParser = bodyParser.json()
 
+app.use(cors({origin: process.env.CORS_ALLOWED_ORIGIN}));
+
 app.get('/', (req, res) => {
     res.send('API is up!');
 });
 
+// get all notes
+app.get('/notes', async (req, res, next) => {
+    try {
+        const notes = await noteService.getAll();
+        if (!notes || notes.length == 0) {
+            res.sendStatus(404);
+        } else {
+            res.send(notes);
+        }
+    } catch (error) {
+        return next(error)
+    }
+});
+
+// search notes
+app.get('/notes/search', async (req, res, next) => {
+    try {
+        const notes = await noteService.search(new NoteSearchQuery(req.query));
+        if (!notes) {
+            notes = [];
+        }
+        res.send(notes);
+    } catch (error) {
+        return next(error)
+    }
+});
+
+// get one note by id. Notice that this should come AFTER the search endpoint, since it will match /notes/search
 app.get('/notes/:noteId', async (req, res, next) => {
     try {
         const note = await noteService.get(req.params.noteId);
@@ -40,36 +73,27 @@ app.get('/notes/:noteId', async (req, res, next) => {
     }
 });
 
-app.post('/notes/search', jsonParser, async (req, res, next) => {
-    try {
-        const notes = await noteService.search(req.body);
-        res.send(notes);
-    } catch (error) {
-        return next(error)
-    }
-    if (!notes) {
-        notes = [];
-    }
-});
-
+// add a note
 app.post('/notes/', jsonParser, async (req, res, next) => {
     try {
-        const note = await noteService.add(req.body);
+        const note = await noteService.add(new Note(req.body));
         res.send(note);
     } catch (error) {
         return next(error)
     }
 });
 
+// update a note
 app.put('/notes/:noteId', jsonParser, async (req, res, next) => {
     try {
-        const note = await noteService.update(req.params.noteId, req.body);
+        const note = await noteService.update(req.params.noteId, new Note(req.body));
         res.send(note);
     } catch (error) {
         return next(error)
     }
 });
 
+// delte a note
 app.delete('/notes/:noteId', async (req, res, next) => {
     try {
         const note = await noteService.delete(req.params.noteId);
@@ -79,6 +103,7 @@ app.delete('/notes/:noteId', async (req, res, next) => {
     }
 });
 
+// error handler
 app.use((err, req, res, next) => {
     console.error(err.stack)
     if (err.name == "BadRequest") {

@@ -18,6 +18,10 @@ export default class InMemoryNotes {
         return note;
     }
 
+    async getAll() {
+        return await this.persistant.getAll();
+    }
+
     async getById(id) {
         let found = await this.cache.getById(id);
         if (found) {
@@ -31,6 +35,6 @@ export default class InMemoryNotes {
     }
     
     async search(text) {
-        return await this.persistant.search(id);;
+        return await this.persistant.search(text);;
     }
 }

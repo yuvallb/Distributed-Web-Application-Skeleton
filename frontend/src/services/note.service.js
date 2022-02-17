@@ -26,7 +26,7 @@ class NoteDataService {
   }
 
   findByTitle(title) {
-    return http.get(`/notes?title=${title}`);
+    return http.get(`/notes/search?text=${title}`);
   }
 }
 

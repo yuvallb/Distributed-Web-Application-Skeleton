@@ -25,6 +25,10 @@ export default class RedisNotes {
         await this.client.del(id)
     }
 
+    async getAll() {
+        throw new Error("not implemented");
+    }
+
     async getById(id) {
         await this.connect();
         const note = await this.client.hGetAll(id);

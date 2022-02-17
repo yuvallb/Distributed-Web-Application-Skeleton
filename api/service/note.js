@@ -4,18 +4,26 @@ export default class NoteService {
     constructor(noteData) {
         this.data = noteData;
     }
+
+    async getAll() {
+        return await this.data.getAll();
+    }
+    
     async get(id) {
         return await this.data.getById(id);
     }
+
     async search(query) {
         this.requiredField(query, "text");
         return await this.data.search(query.text);
     }
+
     async add(note) {
         note.id = uuidv4();
         this.requiredField(note, "title");
         return await this.data.add(note);
     }
+
     async update(id, note) {
         this.requiredField(note, "id");
         this.requiredField(note, "title");
