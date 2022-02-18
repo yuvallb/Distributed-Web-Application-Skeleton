@@ -9,18 +9,26 @@ import RedisNotes from './data-access/note/redis.js';
 import CachedNotes from './data-access/note/cached.js';
 import Note from './model/note.js';
 import NoteSearchQuery from './model/note-search-query.js';
+import RedisNoteEvents from './events/note/redis.js';
+import InMemoryNoteEvents from './events/note/in-memory.js';
 
 // create dependencies from configuration
 let notesData;
-if (process.env.MONGO_URI && process.env.REDIS_URI) {
-    notesData = new CachedNotes(new MongoNotes(process.env.MONGO_URI) , new RedisNotes(process.env.REDIS_URI));
+if (process.env.MONGO_URI && process.env.REDIS_CACHE_URI) {
+    notesData = new CachedNotes(new MongoNotes(process.env.MONGO_URI) , new RedisNotes(process.env.REDIS_CACHE_URI));
 } else if (process.env.MONGO_URI) {
     notesData = new MongoNotes(process.env.MONGO_URI);
 } else {
     notesData = new InMemoryNotes();
 }
+let notesEvents;
+if (process.env.REDIS_EVENTS_URI) {
+    notesEvents = new RedisNoteEvents(process.env.REDIS_EVENTS_URI);
+} else {
+    notesEvents = new InMemoryNoteEvents();
+}
 // inject dependencies into services
-const noteService = new NoteService(notesData);
+const noteService = new NoteService(notesData, notesEvents);
 
 const app = express();
 const port = process.env.PORT;

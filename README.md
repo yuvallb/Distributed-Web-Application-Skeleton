@@ -37,11 +37,11 @@ To exit, hit Ctrl-C
 
 ## Backend Email Sender
 
-We will use a nodeJS application, listening to a redis queue.
+We will use a nodeJS application, listening to a redis queue, and sending fake email.
 To run ther backend email sender locally, open a new terminal window and run: 
 ```bash
 cd email-sender
-node run watch 
+node run watch
 ```
 To exit, hit Ctrl-C
 

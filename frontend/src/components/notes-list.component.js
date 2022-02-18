@@ -142,7 +142,7 @@ export default class NotesList extends Component {
               <div>
                 <label>
                   <strong>Deadline:</strong>
-                </label>
+                </label>{" "}
                 {currentNote.deadline}
               </div>
 

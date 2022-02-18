@@ -1,6 +1,5 @@
 import { createClient } from 'redis';
 
-
 export default class RedisNotes {
 
     constructor(url) {

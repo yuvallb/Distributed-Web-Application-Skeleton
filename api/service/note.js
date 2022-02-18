@@ -1,8 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
+import NoteEvent from '../model/note-event.js';
 
 export default class NoteService {
-    constructor(noteData) {
+    constructor(noteData, noteEvents) {
         this.data = noteData;
+        this.events = noteEvents;
     }
 
     async getAll() {
@@ -21,7 +23,9 @@ export default class NoteService {
     async add(note) {
         note.id = uuidv4();
         this.requiredField(note, "title");
-        return await this.data.add(note);
+        const result = await this.data.add(note);
+        await this.events.publish(new NoteEvent({eventType:'add', after: result}))
+        return result;
     }
 
     async update(id, note) {
@@ -32,10 +36,16 @@ export default class NoteService {
             error.name = "BadRequest";
             throw error;
         }
-        return await this.data.update(note);
+        const before = await this.data.getById(note.id);
+        const after = await this.data.update(note);
+        await this.events.publish(new NoteEvent({eventType:'update', before: before, after: after}))
+        return after;
     }
     async delete(id) {
-        return await this.data.delete(id);
+        const before = await this.data.getById(id);
+        const result = await this.data.delete(id);
+        await this.events.publish(new NoteEvent({eventType:'delete', before: before}))
+        return result;
     }
 
     // private

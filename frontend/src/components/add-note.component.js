@@ -41,7 +41,8 @@ export default class AddNote extends Component {
   saveNote() {
     var data = {
       title: this.state.title,
-      content: this.state.content
+      content: this.state.content,
+      deadline: this.state.deadline
     };
 
     NoteDataService.create(data)
@@ -117,7 +118,7 @@ export default class AddNote extends Component {
                 className="form-control"
                 id="deadline"
                 required
-                value={this.state.content}
+                value={this.state.deadline}
                 onChange={this.onChangeDeadline}
                 name="deadline"
               />
