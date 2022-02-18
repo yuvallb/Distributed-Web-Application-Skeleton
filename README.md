@@ -1,6 +1,6 @@
-# Web Application skeleton
+# Distributed Web Application Skeleton
 
-This is a minimalist distributed web application skeleton, for demonstrating how various components can be implemented together: fronend, api, databasae, cache and pub-sub. 
+This is a minimalist distributed web application skeleton, for demonstrating how various components can be implemented together: frontend, api, database, cache and pub-sub. 
 
 This example uses Node.js, MongoDB and Redis. To run the application locally, open each component in a separate terminal window, as explained below.
 
@@ -12,17 +12,13 @@ This example uses Node.js, MongoDB and Redis. To run the application locally, op
 
 ## Database
 
-MongoDB is used as a database service. 
-
 To run MongoDB locally, open a new terminal window and run: 
 ```bash
 docker run -p 27017:27017 -v <full local path of working directory>/mongodb-data:/data/db mongo
 ```
 To exit, hit Ctrl-C
 
-## Cache and Queue
-
-Redis is used for both a caching service and a pub-sub service. 
+## Cache and Pub-Sub
 
 To run Redis locally, open a new terminal window and run: 
 ```bash
@@ -33,6 +29,7 @@ To exit, hit Ctrl-C
 ## Backend API
 
 A Node.js application listening on port 8080.
+
 To run ther backend api server locally, open a new terminal window and run: 
 ```bash
 cd api
@@ -61,14 +58,15 @@ To exit, hit Ctrl-C
 
 ## Frontend
 
-We will use react, served by nodeJS (using react-scripts) listening on port 8000.
+React application, served by nodeJS (using react-scripts) listening on port 8000.
+
 To run ther frontend web server locally, open a new terminal window and run: 
 ```bash
 cd frontend
 npm install # first time only
 npm run watch 
 ```
-To browse the webapp, open a browser at http://localhost:8000
+To browse the webapp, go to http://localhost:8000
 
 To exit, hit Ctrl-C
 
