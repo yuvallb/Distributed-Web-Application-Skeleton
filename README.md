@@ -49,7 +49,7 @@ To run the email sender locally, open a new terminal window and run:
 ```bash
 cd email-sender
 npm install # first time only
-node run watch
+npm run watch
 ```
 The emails will be sent to a fake address using http://ethereal.email/ service. 
 
