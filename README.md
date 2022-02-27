@@ -4,6 +4,8 @@ This is a minimalist distributed web application skeleton, for demonstrating how
 
 This example uses Node.js, MongoDB and Redis. To run the application locally, open each component in a separate terminal window, as explained below.
 
+![System diagram](SkeletonApp.drawio.png)
+
 ## Prerequisites
 
 * git
